@@ -28,7 +28,7 @@ const Edit = ({ addData, submittingStatus }) => {
       <h3>Content</h3>
       <input type="text" value={content} onChange={changeContent} />
       <button onClick={addItem} className="add">
-        加入
+        Add Todo
       </button>
     </div>
   );

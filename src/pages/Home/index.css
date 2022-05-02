@@ -40,6 +40,7 @@ input {
 }
 
 .edit {
+  width: 15%;
   border: 0;
   background-color: rgb(212, 186, 101);
   color: #fff;
@@ -47,6 +48,7 @@ input {
 }
 
 .remove {
+  width: 15%;
   border: 0;
   background-color: rgb(212, 101, 101);
   color: #fff;
@@ -54,6 +56,7 @@ input {
 }
 
 .completed {
+  width: 15%;
   border: 0;
   background-color: rgb(7, 115, 247);
   color: #fff;

@@ -7,6 +7,7 @@ const Item = ({
   reflashStatus,
   completeStatus,
 }) => {
+
   function completeItem() {
     completeStatus.current = id;
     modifyData(function (prev) {
@@ -42,17 +43,24 @@ const Item = ({
     );
   }
 
+  function ButtonIsCompleted() {
+    if (status === 1) {
+      return <div>Undo</div>;
+    }
+    return <div>Done</div>;
+  }
+
   return (
     <div>
       <div className="item">
         <IsCompleted />
-        <button className="edit">
-          Edit
+        <button onClick={completeItem} className="completed">
+          <ButtonIsCompleted />
         </button>
       </div>
       <div className="button">
-        <button onClick={completeItem} className="completed">
-          Done
+      <button className="edit">
+          Edit
         </button>
         <button onClick={deleteItem} className="remove">
           Delete
