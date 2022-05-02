@@ -34,6 +34,16 @@ input {
   align-items: center;
 }
 
+.text-box {
+  width: 300px;
+  padding: 10px;
+}
+
+.text-content {
+  overflow: auto;
+  word-wrap: break-word;
+}
+
 .button {
   width: 100%;
   text-align: right;

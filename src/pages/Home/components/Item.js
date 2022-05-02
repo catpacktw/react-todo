@@ -36,9 +36,9 @@ const Item = ({
       );
     }
     return (
-      <div>
+      <div className="text-box">
         <h3>{title}</h3>
-        <p>{content}</p>
+        <p className="text-content">{content}</p>
       </div>
     );
   }
