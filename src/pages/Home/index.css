@@ -62,6 +62,7 @@ input {
   border: 0;
   background-color: rgb(212, 101, 101);
   color: #fff;
+  border: #fff 2px solid;
   padding: 10px;
 }
 
