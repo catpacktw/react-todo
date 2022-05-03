@@ -20,6 +20,40 @@ input {
   padding: 15px;
 }
 
+.filters {
+  width: 100%;
+  margin: unset auto;
+}
+
+.btn {
+  padding: 0.8rem 1rem 0.7rem;
+  border: 0.2rem solid #4d4d4d;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.btn.toggle-btn {
+  border-width: 1px;
+  border-color: #d3d3d3;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-group > * {
+  flex: 1 1 49%;
+}
+
+.stack-exception {
+  margin-top: 1.2rem;
+}
+
+.btn-group > * + * {
+  margin-left: 0.8rem;
+}
+
 .list {
   padding-top: 20px;
 }

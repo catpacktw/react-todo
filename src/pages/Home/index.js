@@ -9,10 +9,17 @@ import {
 
 import Add from "./components/Add";
 import List from "./components/List";
+import Filter from "./components/Filter";
 import "./index.css";
 
-async function fetchQueryData(setData) {
-  const resp = await fetch(GET_TODO_LIST);
+async function fetchQueryData(taskStatus, setData) {
+  const resp = await fetch(
+    taskStatus === null
+      ? GET_TODO_LIST
+      : GET_TODO_LIST +
+          "?" +
+          new URLSearchParams({ status: taskStatus })
+  );
   const { data } = await resp.json();
   setData(data);
   console.log(data);
@@ -67,6 +74,8 @@ async function fetchAddData(data) {
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [taskStatus, setTaskStatus] = useState(null);
+  const reflashFilter = useRef(false);
   const submittingStatus = useRef(false);
   const reflashStatus = useRef(0);
   const completeStatus = useRef(0);
@@ -78,7 +87,7 @@ const Home = () => {
     }
     fetchAddData(data)
       .then(() => (submittingStatus.current = false))
-      .then(() => fetchQueryData(setData));
+      .then(() => fetchQueryData(taskStatus, setData));
   }, [data]);
 
   useEffect(() => {
@@ -89,7 +98,7 @@ const Home = () => {
       if (row.id === editStatus.current) {
         fetchEditData(row)
           .then(() => (editStatus.current = 0))
-          .then(() => fetchQueryData(setData));
+          .then(() => fetchQueryData(taskStatus, setData));
       }
       return row;
     });
@@ -101,7 +110,7 @@ const Home = () => {
     }
     fetchCompleteData(completeStatus.current)
       .then(() => (completeStatus.current = 0))
-      .then(() => fetchQueryData(setData));
+      .then(() => fetchQueryData(taskStatus, setData));
   }, [data]);
 
   useEffect(() => {
@@ -110,16 +119,25 @@ const Home = () => {
     }
     fetchDeleteData(reflashStatus.current)
       .then(() => (reflashStatus.current = 0))
-      .then(() => fetchQueryData(setData));
+      .then(() => fetchQueryData(taskStatus, setData));
   }, [data]);
 
   useEffect(() => {
-    fetchQueryData(setData);
+    if (reflashFilter.current === false) {
+      return;
+    }
+    fetchQueryData(taskStatus, setData)
+    .then(() => (reflashFilter = false));
+  }, [taskStatus]);
+
+  useEffect(() => {
+    fetchQueryData(taskStatus, setData);
   }, []);
 
   return (
     <div className="app">
       <Add addData={setData} submittingStatus={submittingStatus} />
+      <Filter setTaskStatus={setTaskStatus} reflashFilter={reflashFilter} />
       <List
         listData={data}
         modifyData={setData}
