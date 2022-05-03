@@ -1,6 +1,12 @@
 import Item from "./Item";
 
-const List = ({ listData, modifyData, reflashStatus, completeStatus }) => {
+const List = ({
+  listData,
+  modifyData,
+  reflashStatus,
+  completeStatus,
+  editStatus,
+}) => {
   return (
     <div className="list">
       {listData.map((item) => {
@@ -15,6 +21,7 @@ const List = ({ listData, modifyData, reflashStatus, completeStatus }) => {
             modifyData={modifyData}
             reflashStatus={reflashStatus}
             completeStatus={completeStatus}
+            editStatus={editStatus}
           />
         );
       })}

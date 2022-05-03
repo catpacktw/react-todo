@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Item = ({
   id,
   title,
@@ -6,7 +8,20 @@ const Item = ({
   modifyData,
   reflashStatus,
   completeStatus,
+  editStatus,
 }) => {
+  const [editId, setEditId] = useState(0);
+  const [editContent, setEditContent] = useState(content);
+
+  function submitEdit() {
+    editStatus.current = id;
+    modifyData(function (prev) {
+      return prev.map((item) =>
+        item.id === id ? { ...item, content: editContent } : item
+      );
+    });
+    setEditId(0);
+  }
 
   function completeItem() {
     completeStatus.current = id;
@@ -27,11 +42,13 @@ const Item = ({
   function IsCompleted() {
     if (status === 1) {
       return (
-        <div>
+        <div className="text-box">
           <h3>
             <s>{title}</s>
           </h3>
-          <s>{content}</s>
+          <p className="text-content">
+            <s>{content}</s>
+          </p>
         </div>
       );
     }
@@ -53,15 +70,33 @@ const Item = ({
   return (
     <div>
       <div className="item">
-        <IsCompleted />
+        {id === editId ? (
+          <div className="text-box">
+            <h3>{title}</h3>
+            <textarea
+              className="text-area"
+              type="text"
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+            />
+          </div>
+        ) : (
+          <IsCompleted />
+        )}
         <button onClick={completeItem} className="completed">
           <ButtonIsCompleted />
         </button>
       </div>
       <div className="button">
-      <button className="edit">
-          Edit
-        </button>
+        {id === editId ? (
+          <button onClick={submitEdit} className="edit">
+            Submit
+          </button>
+        ) : (
+          <button onClick={() => setEditId(id)} className="edit">
+            Edit
+          </button>
+        )}
         <button onClick={deleteItem} className="remove">
           Delete
         </button>

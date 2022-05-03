@@ -35,13 +35,18 @@ input {
 }
 
 .text-box {
-  width: 300px;
+  width: 350px;
   padding: 10px;
 }
 
 .text-content {
   overflow: auto;
   word-wrap: break-word;
+}
+
+.text-area {
+  width: 100%;
+  min-height: 50px;
 }
 
 .button {

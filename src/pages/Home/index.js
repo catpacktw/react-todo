@@ -3,10 +3,11 @@ import {
   GET_TODO_LIST,
   ADD_TASK,
   DELETE_TASK,
+  UPDATE_TASK,
   UPDATE_TASK_STATUS,
 } from "../../global/constant";
 
-import Edit from "./components/Edit";
+import Add from "./components/Add";
 import List from "./components/List";
 import "./index.css";
 
@@ -44,6 +45,16 @@ async function fetchDeleteData(id) {
   );
 }
 
+async function fetchEditData(row) {
+  await fetch(UPDATE_TASK, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(row),
+  });
+}
+
 async function fetchAddData(data) {
   await fetch(ADD_TASK, {
     method: "POST",
@@ -59,6 +70,7 @@ const Home = () => {
   const submittingStatus = useRef(false);
   const reflashStatus = useRef(0);
   const completeStatus = useRef(0);
+  const editStatus = useRef(0);
 
   useEffect(() => {
     if (!submittingStatus.current) {
@@ -67,6 +79,20 @@ const Home = () => {
     fetchAddData(data)
       .then(() => (submittingStatus.current = false))
       .then(() => fetchQueryData(setData));
+  }, [data]);
+
+  useEffect(() => {
+    if (!editStatus.current) {
+      return;
+    }
+    data.map((row) => {
+      if (row.id === editStatus.current) {
+        fetchEditData(row)
+          .then(() => (editStatus.current = 0))
+          .then(() => fetchQueryData(setData));
+      }
+      return row;
+    });
   }, [data]);
 
   useEffect(() => {
@@ -93,12 +119,13 @@ const Home = () => {
 
   return (
     <div className="app">
-      <Edit addData={setData} submittingStatus={submittingStatus} />
+      <Add addData={setData} submittingStatus={submittingStatus} />
       <List
         listData={data}
         modifyData={setData}
         reflashStatus={reflashStatus}
         completeStatus={completeStatus}
+        editStatus={editStatus}
       />
     </div>
   );

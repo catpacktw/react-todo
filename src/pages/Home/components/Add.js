@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Edit = ({ addData, submittingStatus }) => {
+const Add = ({ addData, submittingStatus }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -34,4 +34,4 @@ const Edit = ({ addData, submittingStatus }) => {
   );
 };
 
-export default Edit;
+export default Add;
