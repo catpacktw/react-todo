@@ -42,9 +42,13 @@ const Add = ({ addData, submittingStatus }) => {
         <h3>Subject</h3>
         {priorityBtns}
       </div>
-      <input type="text" value={title} onChange={changeTitle} />
+      <div className="add-text">
+        <input type="text" value={title} onChange={changeTitle} />
+      </div>
       <h3>Content</h3>
-      <input type="text" value={content} onChange={changeContent} />
+      <div className="add-text">
+        <input type="text" value={content} onChange={changeContent} />
+      </div>
       <button onClick={addItem} className="add">
         Add Todo
       </button>
