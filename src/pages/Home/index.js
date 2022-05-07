@@ -16,9 +16,7 @@ async function fetchQueryData(taskStatus, setData) {
   const resp = await fetch(
     taskStatus === null
       ? GET_TODO_LIST
-      : GET_TODO_LIST +
-          "?" +
-          new URLSearchParams({ status: taskStatus })
+      : GET_TODO_LIST + "?" + new URLSearchParams({ status: taskStatus })
   );
   const { data } = await resp.json();
   setData(data);
@@ -75,6 +73,7 @@ async function fetchAddData(data) {
 const Home = () => {
   const [data, setData] = useState([]);
   const [taskStatus, setTaskStatus] = useState(null);
+  const [filterName, setFilterName] = useState(["All"]);
   const reflashFilter = useRef(false);
   const submittingStatus = useRef(false);
   const reflashStatus = useRef(0);
@@ -126,8 +125,7 @@ const Home = () => {
     if (reflashFilter.current === false) {
       return;
     }
-    fetchQueryData(taskStatus, setData)
-    .then(() => (reflashFilter = false));
+    fetchQueryData(taskStatus, setData).then(() => (reflashFilter = false));
   }, [taskStatus]);
 
   useEffect(() => {
@@ -137,7 +135,12 @@ const Home = () => {
   return (
     <div className="app">
       <Add addData={setData} submittingStatus={submittingStatus} />
-      <Filter setTaskStatus={setTaskStatus} reflashFilter={reflashFilter} />
+      <Filter
+        setTaskStatus={setTaskStatus}
+        reflashFilter={reflashFilter}
+        setFilterName={setFilterName}
+        filterName={filterName}
+      />
       <List
         listData={data}
         modifyData={setData}

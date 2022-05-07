@@ -1,10 +1,18 @@
 import { useState } from "react";
 
+const PRIORITY_BTN_MAP = {
+  Urgent: 3,
+  High: 2,
+  Medium: 1,
+  Low: 0,
+};
+
 const Item = ({
   id,
   title,
   content,
   status,
+  weight,
   modifyData,
   reflashStatus,
   completeStatus,
@@ -45,6 +53,9 @@ const Item = ({
         <div className="text-box">
           <h3>
             <s>{title}</s>
+            <s>
+              <small> [{findPriority(weight)}]</small>
+            </s>
           </h3>
           <p className="text-content">
             <s>{content}</s>
@@ -54,7 +65,10 @@ const Item = ({
     }
     return (
       <div className="text-box">
-        <h3>{title}</h3>
+        <h3>
+          {title}
+          <small> [{findPriority(weight)}]</small>
+        </h3>
         <p className="text-content">{content}</p>
       </div>
     );
@@ -67,12 +81,23 @@ const Item = ({
     return <div>Done</div>;
   }
 
+  function findPriority(weight) {
+    var priority = "";
+    for (let [key, value] of Object.entries(PRIORITY_BTN_MAP)) {
+      if (value === weight) priority = key;
+    }
+    return priority;
+  }
+
   return (
     <div>
       <div className="item">
         {id === editId ? (
           <div className="text-box">
-            <h3>{title}</h3>
+            <h3>
+              {title}
+              <small> [{findPriority(weight)}]</small>
+            </h3>
             <textarea
               className="text-area"
               type="text"

@@ -1,34 +1,30 @@
-const Filter = ({ setTaskStatus, reflashFilter }) => {
-  function changeTaskStatus(status) {
-    reflashFilter.current = true;
-    setTaskStatus(status);
-  }
+import FilterButton from "./FilterButton";
 
-  return (
-    <div className="filters btn-group stack-exception">
-      <button
-        onClick={() => changeTaskStatus(null)}
-        type="button"
-        className="btn toggle-btn"
-      >
-        All
-      </button>
-      <button
-        onClick={() => changeTaskStatus(0)}
-        type="button"
-        className="btn toggle-btn"
-      >
-        Pending
-      </button>
-      <button
-        onClick={() => changeTaskStatus(1)}
-        type="button"
-        className="btn toggle-btn"
-      >
-        Done
-      </button>
-    </div>
-  );
+const BTN_MAP = {
+  All: () => null,
+  Pending: () => 0,
+  Done: () => 1,
+};
+
+const BTN_NAMES = Object.entries(BTN_MAP);
+
+const Filter = ({
+  setTaskStatus,
+  reflashFilter,
+  setFilterName,
+  filterName,
+}) => {
+  const btns = BTN_NAMES.map((btn) => (
+    <FilterButton
+      btn={btn}
+      isPressed={btn[0] === filterName}
+      setTaskStatus={setTaskStatus}
+      reflashFilter={reflashFilter}
+      setFilterName={setFilterName}
+    />
+  ));
+
+  return <div className="filters btn-group stack-exception">{btns}</div>;
 };
 
 export default Filter;

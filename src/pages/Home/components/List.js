@@ -10,7 +10,7 @@ const List = ({
   return (
     <div className="list">
       {listData.map((item) => {
-        const { title, content, id, status } = item;
+        const { title, content, id, status, weight } = item;
         return (
           <Item
             key={id}
@@ -18,6 +18,7 @@ const List = ({
             title={title}
             content={content}
             status={status}
+            weight={weight}
             modifyData={modifyData}
             reflashStatus={reflashStatus}
             completeStatus={completeStatus}
