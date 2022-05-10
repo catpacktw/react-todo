@@ -16,6 +16,7 @@ const Filter = ({
 }) => {
   const btns = BTN_NAMES.map((btn) => (
     <FilterButton
+      key={btn[0]}
       btn={btn}
       isPressed={btn[0] === filterName}
       setTaskStatus={setTaskStatus}

@@ -20,7 +20,6 @@ async function fetchQueryData(taskStatus, setData) {
   );
   const { data } = await resp.json();
   setData(data);
-  console.log(data);
   return data;
 }
 

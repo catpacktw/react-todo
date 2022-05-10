@@ -12,6 +12,7 @@ const Add = ({ addData, submittingStatus }) => {
 
   const priorityBtns = PRIORITY_BTN_NAMES.map((btn) => (
     <PriorityButton
+      key={btn[0]}
       btn={btn}
       isPressed={btn[0] === priorityName}
       priorityName={setPriorityName}
@@ -26,13 +27,13 @@ const Add = ({ addData, submittingStatus }) => {
     setContent(e.target.value);
   }
 
-  console.log(title, content, weight);
-
   function addItem() {
     submittingStatus.current = true;
-    addData((prevData) => [{ title, content, weight }, ...prevData]);
+    var id = new Date().getTime();
+    addData((prevData) => [{ id, title, content, weight }, ...prevData]);
     setTitle("");
     setContent("");
+    setWeight(2);
   }
 
   return (
